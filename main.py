@@ -8,10 +8,10 @@ app = Flask(__name__)
 @app.route('/predict-flight-fare',methods=['POST'])
 def predict_flight_fare():
     flight_data = request.json
-    fare = flight_fare_model(flight_data)
+    fare = flight_fare_model(data =flight_data)
     print(fare)
 
-    return jsonify(fare[0])
+    return jsonify(fare)
 
 def flight_fare_model(data):
     from datetime import datetime
@@ -71,9 +71,20 @@ def flight_fare_model(data):
 
     with open(config.FLIGHT_FARE_MODEL_FILE,'rb') as pkl:
         flight_fare_model = pickle.load(pkl)
-
-    return flight_fare_model.predict(([[
-    dur_min,Total_stops,Dep_hour,Dep_min,Arrival_hour,Arrival_min,Journey_day,Journey_month,Air_India,GoAir,
+    new_fare = {}
+    for i,j in config.booking_company.items():
+        predicted_fare = flight_fare_model.predict(([
+            [
+                dur_min,
+                Total_stops,
+               # j,
+                Dep_hour,
+                Dep_min,
+                Arrival_hour,
+                Arrival_min,
+                Journey_day,
+                Journey_month,
+                Air_India,GoAir,
                 IndiGo,
                 Multiple_carriers,
                 Multiple_carriers_Premium_economy,
@@ -91,6 +102,11 @@ def flight_fare_model(data):
                 d_Kolkata,
                 d_New_Delhi
             ]]))
+        new_fare[i] = predicted_fare[0]
+    discount = config.membership_discount[data['Membership_status'].lower()]
+    new_fare['Best_offered_price'] = min(new_fare.values()) - min(new_fare.values())*(discount/100)
+    
+    return new_fare
 
 if __name__== '__main__' :
     app.run()

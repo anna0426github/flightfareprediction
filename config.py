@@ -25,3 +25,6 @@ destination ={"d_cochin" : 0,
 "d_kolkata" : 0,
 "d_new_delhi":0}
 
+booking_company = {"IRCTC": 0, "Goibibo": 1, "Makemytrip": 2}
+
+membership_discount = {"gold":10,"platinum":15,"silver":5}
