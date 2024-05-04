@@ -17,15 +17,15 @@ def flight_fare_model(data):
     from datetime import datetime
     Total_stops = data['Number_Of_Stops']
     journey_date = data['Journey_Date']
-    Journey_day = datetime.strptime(journey_date,"%d-%b-%Y").date().day
-    Journey_month = datetime.strptime(journey_date,"%d-%b-%Y").date().month
+    Journey_day = int(datetime.strptime(journey_date,"%d-%b-%Y").date().day)
+    Journey_month = int(datetime.strptime(journey_date,"%d-%b-%Y").date().month)
     departure_time = data['Dept_Time']
-    Dep_hour = departure_time.split(':')[0]
+    Dep_hour = int(departure_time.split(':')[0])
     print(Dep_hour)
-    Dep_min = departure_time.split(':')[1]
+    Dep_min = int(departure_time.split(':')[1])
     arrival_time = data['Arrival_Time']
-    Arrival_hour = arrival_time.split(':')[0]
-    Arrival_min = arrival_time.split(':')[1]
+    Arrival_hour = int(arrival_time.split(':')[0])
+    Arrival_min = int(arrival_time.split(':')[1])
     dur_min = int((datetime.strptime(arrival_time, '%H:%M') - datetime.strptime(departure_time, '%H:%M')).total_seconds()/60)
     print(dur_min)
     airline = data['Airline_Name']
@@ -113,5 +113,5 @@ def flight_fare_model(data):
     return new_fare
 
 if __name__== '__main__' :
-    app.run(host='0.0.0.0', port= 8080)
+    app.run()
     
