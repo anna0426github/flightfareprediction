@@ -113,5 +113,5 @@ def flight_fare_model(data):
     return new_fare
 
 if __name__== '__main__' :
-    app.run()
+    app.run(host="0.0.0.0",port=8080)
     
