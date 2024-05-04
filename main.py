@@ -73,11 +73,13 @@ def flight_fare_model(data):
         flight_fare_model = pickle.load(pkl)
     new_fare = {}
     for i,j in config.booking_company.items():
+        print(i)
+        print(j)
         predicted_fare = flight_fare_model.predict(([
             [
                 dur_min,
                 Total_stops,
-               # j,
+                j,
                 Dep_hour,
                 Dep_min,
                 Arrival_hour,
@@ -102,9 +104,11 @@ def flight_fare_model(data):
                 d_Kolkata,
                 d_New_Delhi
             ]]))
-        new_fare[i] = predicted_fare[0]
+        print(predicted_fare)
+        new_fare[i] = round(predicted_fare[0])
+    print(new_fare)
     discount = config.membership_discount[data['Membership_status'].lower()]
-    new_fare['Best_offered_price'] = min(new_fare.values()) - min(new_fare.values())*(discount/100)
+    new_fare['Best_offered_price'] = round(min(new_fare.values()) - min(new_fare.values())*(discount/100))
     
     return new_fare
 

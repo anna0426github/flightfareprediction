@@ -1,7 +1,7 @@
 import os
 
 
-FLIGHT_FARE_MODEL_FILE = os.path.join('ML_Model','new_flight_fare.pkl')
+FLIGHT_FARE_MODEL_FILE = os.path.join('ML_Model','rf_model.pkl')
 
 
 airline = {"air_india" : 0,
